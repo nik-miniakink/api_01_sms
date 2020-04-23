@@ -8,7 +8,7 @@ load_dotenv()
 
 def get_status(user_id):
     data = {
-        'user_id': user_id,
+        'user_ids': user_id,
         'v': '5.103',
         'access_token': os.getenv('Ttoken_vk')
     }
