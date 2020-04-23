@@ -10,7 +10,9 @@ def get_status(user_id):
     data = {
         'user_ids': user_id,
         'v': '5.103',
-        'access_token': os.getenv('Ttoken_vk')
+        'access_token': os.getenv('token_vk')
+        'fields':'online',
+
     }
     friends_list = requests.post('https://api.vk.com/method/users.get', params=data)
     return friends_list
