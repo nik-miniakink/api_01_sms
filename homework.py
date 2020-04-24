@@ -6,23 +6,29 @@ from twilio.rest import Client
 load_dotenv()
 
 
+account_sid = os.getenv('TWILIO_ACCOUNT_SID')
+auth_token = os.getenv('TWILIO_AUTH_TOKEN')
+NUMBER_FROM = os.getenv('NUMBER_FROM')
+NUMBER_TO = os.getenv('NUMBER_TO')
+
+version_api = '5.103'
+url_vk = 'https://api.vk.com/method/users.get'
+
+
 def get_status(user_id):
     data = {
         'user_ids': user_id,
-        'v': '5.103',
+        'v': version_api,
         'access_token': os.getenv('token_vk'),
         'fields': 'online',
     }
-    response = requests.post('https://api.vk.com/method/users.get', params=data)
+    response = requests.post(url_vk, params=data)
     online_or_not = response.json()['response'][0]['online']
     return online_or_not
 
 
 def sms_sender(sms_text):
-    account_sid = os.getenv('TWILIO_ACCOUNT_SID')
-    auth_token = os.getenv('TWILIO_AUTH_TOKEN')
-    NUMBER_FROM = os.getenv('NUMBER_FROM')
-    NUMBER_TO = os.getenv('NUMBER_TO')
+
     client = Client(account_sid, auth_token)
     message = client.messages.create(
             body=f"{sms_text}",
